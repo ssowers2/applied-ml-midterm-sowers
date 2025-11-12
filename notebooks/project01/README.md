@@ -1,34 +1,95 @@
-# Mushroom Classification Project
+# 🍄 Mushroom Classification Analysis  
+**Author:** Sabriya Sowers  
+**Date:** November 10, 2025  
 
-This project uses the Agaricus-Lepiota Mushroom dataset to classify mushrooms as **edible (e)** or **poisonous (p)** based on their observable characteristics.
+## Project Overview  
+This project applies **machine learning classification techniques** to predict whether a mushroom is **edible or poisonous** based on its physical characteristics.  
+The dataset used is the **UCI Mushroom Dataset**, containing **8,124 records and 23 categorical features** that describe observable mushroom traits such as color, odor, cap shape, and gill size.  
 
-## Dataset
+The goal of this project was to explore, clean, and model this data to identify patterns that distinguish edible from poisonous mushrooms.
 
-- Source: UCI Machine Learning Repository  
-- File: `agaricus-lepiota.data`  
-- The dataset contains 8,124 rows and 23 categorical features.
+---
 
-## Project Steps (So Far)
+## Dataset Details  
+- **Source:** UCI Machine Learning Repository  
+- **Instances:** 8,124  
+- **Features:** 23 categorical (including target `class`)  
+- **Target Variable:**  
+  - `class` → 0 = edible, 1 = poisonous  
+- **Missing Values:** Present only in `stalk_root` (filled with mode)
 
-### 1. Load the Dataset
-The dataset was loaded from the `Data/` directory using `pandas.read_csv`, specifying:
-- `header=None` (no header row in file)
-- `names=column_names` to apply readable column names
-- `na_values=["?"]` to treat `?` as missing
+---
 
-### 2. Rename Column Headers
-The original encoded column names were replaced with clearer, descriptive names:
+## Data Preparation  
+1. Loaded and inspected the dataset for missing values and structure.  
+2. Renamed columns for clarity.  
+3. Imputed missing values in `stalk_root` using the mode.  
+4. Converted all categorical features to numeric form using one-hot encoding.  
+5. Split the dataset into training and testing sets (80/20).  
 
-```python
-column_names = [
-    "class", "cap_shape", "cap_surface", "cap_color",
-    "bruises", "odor", "gill_attachment", "gill_spacing", "gill_size",
-    "gill_color", "stalk_shape", "stalk_root",
-    "stalk_surface_above_ring", "stalk_surface_below_ring",
-    "stalk_color_above_ring", "stalk_color_below_ring",
-    "veil_type", "veil_color", "ring_number", "ring_type",
-    "spore_print_color", "population", "habitat"
-]
+---
+
+## Exploratory Data Analysis  
+- Count plots were created for key features (`odor`, `spore_print_color`, etc.) to visualize category distributions.  
+- Patterns showed that specific odors and spore colors were strong indicators of toxicity.  
+- The dataset was well balanced (approximately 52% edible vs. 48% poisonous).  
+
+---
+
+## Modeling and Evaluation  
+Two classification models were implemented and compared:
+
+| Model | Accuracy | Key Notes |
+|-------|-----------|-----------|
+| **Decision Tree** | 100% | Accurately classified all records; highly interpretable |
+| **Random Forest** | 100% | More robust and stable; confirms strong feature separability |
+
+**Evaluation Metrics:**  
+- Accuracy  
+- Precision  
+- Recall  
+- F1-Score  
+- Confusion Matrix Visualization  
+
+---
+
+## Key Findings  
+- Features such as `odor`, `gill_size`, and `spore_print_color` are strong predictors of edibility.  
+- Both models achieved perfect accuracy, reflecting the dataset’s high separability.  
+- Random Forest provides better generalization potential despite identical accuracy results.  
+
+---
+
+## Tools and Libraries  
+- Python  
+- pandas, numpy  
+- matplotlib, seaborn  
+- scikit-learn (DecisionTreeClassifier, RandomForestClassifier, metrics)
+
+---
+
+## Reflections  
+- **Challenges:** Managing a fully categorical dataset required careful encoding and verification.  
+- **Insights:** The mushroom dataset strongly demonstrates how feature relationships drive predictive performance.  
+- **Next Steps:**  
+  - Experiment with additional models such as Logistic Regression or SVM.  
+  - Perform feature importance analysis for interpretability.  
+  - Validate with cross-validation or external data to assess overfitting.
+
+---
+
+## Conclusion  
+This project demonstrates the complete data science process — from loading and cleaning data, to feature engineering, modeling, and evaluation.  
+The models’ perfect accuracy illustrates clear relationships between physical traits and mushroom edibility, while also highlighting the importance of validating model generalization beyond one dataset.
+
+
+### Model Summary
+
+| Model Type            | Features Used            | Accuracy | Precision | Recall | F1-Score | Notes |
+|----------------------|--------------------------|:-------:|:--------:|:-----:|:-------:|-------|
+| Decision Tree        | All encoded features     | 1.00    | 1.00     | 1.00  | 1.00    | 80/20 stratified split; perfectly separates classes |
+| Random Forest (100)  | All encoded features     | 1.00    | 1.00     | 1.00  | 1.00    | Ensemble confirmation of perfect separation; more robust to variance |
+
 
 ### Setup virtual environment
 1. uv venv
